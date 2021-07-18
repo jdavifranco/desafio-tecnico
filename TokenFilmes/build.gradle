@@ -29,4 +29,5 @@ task clean(type: Delete) {
 ext{
     version_retrofit = '2.9.0'
     version_nav = '2.3.5'
+    version_moshi = '1.12.0'
 }
