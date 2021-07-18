@@ -5,7 +5,7 @@ import androidx.room.PrimaryKey
 
 /*
 Essa classe com a anotação @Entity servirá para identificar
-os valores de cada coluna da tabela "table_filme"
+os valores de cada coluna da tabela "table_filme".
  */
 
 @Entity(tableName = "table_filme")
