@@ -1,5 +1,6 @@
 package com.jdavifranco.desafio.tokenfilmes.network
 
+
 import android.os.Parcelable
 import com.squareup.moshi.Json
 import kotlinx.parcelize.Parcelize
@@ -19,7 +20,7 @@ id": 19404,
       "release_date": "1995-10-20"
  */
 @Parcelize
-data class FilmesNetwork(
+data class FilmesDTO(
     val id: Long,
     val title:String,
     // used to map img_src from the JSON to imgSrcUrl in our class

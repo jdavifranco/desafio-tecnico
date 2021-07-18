@@ -1,13 +1,10 @@
 package com.jdavifranco.desafio.tokenfilmes.network
 
-import android.util.Log
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.GET
-import retrofit2.http.Query
-
 
 /*
 Interface que contém as chamadas para a api, essas chamadas serão feitas
@@ -20,10 +17,7 @@ os dados recebidos para objetos kotlin
 //O objeto que implementa
 interface FilmesApiService {
     @GET("movies")
-    suspend fun getFilmes(): List<FilmesNetwork>
-
-    @GET("movies")
-    suspend fun getFilmeDetailById(@Query("id")id:String):FilmesNetwork
+    suspend fun getFilmes(): List<FilmesDTO>
 }
 
 /*
