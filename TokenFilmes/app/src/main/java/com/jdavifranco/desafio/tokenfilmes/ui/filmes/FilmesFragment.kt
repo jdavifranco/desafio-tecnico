@@ -22,12 +22,14 @@ class FilmesFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view =  inflater.inflate(R.layout.filmes_fragment, container, false)
-        val resp:TextView = view.findViewById(R.id.txtRetrofit)
-        viewModel = ViewModelProvider(this).get(FilmesViewModel::class.java)
-        resp.text = viewModel.getFilmes()
+
 
         return view
     }
 
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        viewModel = ViewModelProvider(this).get(FilmesViewModel::class.java)
+    }
 
 }

@@ -1,6 +1,9 @@
 package com.jdavifranco.desafio.tokenfilmes.network
 
+import android.os.Parcelable
 import com.squareup.moshi.Json
+import kotlinx.parcelize.Parcelize
+
 /*
 Data transfer object, essa é uma classe cuja função é armazenar os dados recebidos
 através das chamadas http para api.
@@ -15,11 +18,9 @@ id": 19404,
       ],
       "release_date": "1995-10-20"
  */
+@Parcelize
 data class FilmesNetwork(
-    val id: String,
-    val vote_average:Double,
+    val id: Long,
     val title:String,
     // used to map img_src from the JSON to imgSrcUrl in our class
-    @Json(name = "poster_src") val poster_url: String,
-    val genres: List<String>,
-    val release_date: String)
+    @Json(name = "poster_url") val poster_src: String) : Parcelable
