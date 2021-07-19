@@ -60,7 +60,7 @@ class FilmesDatabaseUnitTest {
     }
 
     /*
-    Teste do método update da Dao para garantir que os detalhes serão atualizados
+    Teste do método update da Dao para testar se os detalhes estão sendo atualizados
     no banco de dados, quando o método for chamado.
      */
     @Test
