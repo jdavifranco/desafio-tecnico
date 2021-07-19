@@ -18,7 +18,7 @@ os dados recebidos para objetos kotlin
 //O objeto que implementa
 interface FilmesApiService {
     @GET("movies")
-    suspend fun getFilmes(): FilmesNetwork
+    suspend fun getFilmes(): List<FilmesDTO>
 
     @GET(value = "movies/")
     suspend fun getFilmeDetalhesById(@Query("filmeId") filmeID:Long):DetalhesDTO
@@ -35,11 +35,10 @@ interface FilmesApiService {
             val moshi = Moshi.Builder()
                 .add(KotlinJsonAdapterFactory())
                 .build()
-
             //criando o objeto retrofit que servirá para criar a api
             val retrofit = Retrofit.Builder()
                 .baseUrl(BASE_URL)
-                .addConverterFactory(MoshiConverterFactory.create(moshi))
+                .addConverterFactory(MoshiConverterFactory.create())
                 .build()
 
             return retrofit

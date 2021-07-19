@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import com.jdavifranco.desafio.tokenfilmes.database.Filme
 import com.jdavifranco.desafio.tokenfilmes.database.FilmeDao
 import com.jdavifranco.desafio.tokenfilmes.network.FilmesApiService
+import com.jdavifranco.desafio.tokenfilmes.network.FilmesNetwork
 import com.jdavifranco.desafio.tokenfilmes.network.asDatabaseFilmesModel
 import com.jdavifranco.desafio.tokenfilmes.network.toDetalhesDatabaseModel
 import kotlinx.coroutines.Dispatchers
@@ -23,13 +24,14 @@ class FilmesRepository(private val database:FilmeDao, private val networkSource:
      */
     val filmes:LiveData<List<Filme>> = database.getAllFilmes()
 
+
     //Função para atualizar os dados do banco de dados com os dados do servidor
     suspend fun refreshFilmes(){
         //Utilizando coroutines para fazer a chamada a api e não bloquear a Main Thread.
         withContext(Dispatchers.IO){
             //Recebe um objeto do tipo FilmesNetowrk que possui como propriedade uma lista de filmesDto
             //e uma funcao para mapear para database filmes
-            val filmesUpdated = networkSource.getFilmes()
+            val filmesUpdated= FilmesNetwork(networkSource.getFilmes())
             database.insertAll(filmesUpdated.asDatabaseFilmesModel())
         }
     }

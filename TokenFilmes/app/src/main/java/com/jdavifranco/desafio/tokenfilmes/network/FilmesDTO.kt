@@ -5,6 +5,7 @@ import android.os.Parcelable
 import com.jdavifranco.desafio.tokenfilmes.database.Detalhes
 import com.jdavifranco.desafio.tokenfilmes.database.Filme
 import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 import kotlinx.parcelize.Parcelize
 
 /*
@@ -25,16 +26,16 @@ fun FilmesNetwork.asDatabaseFilmesModel():  List<Filme> {
     }
 }
 //dto para os dados simples dos filmes
-@Parcelize
+@JsonClass(generateAdapter = true)
 data class FilmesDTO(
     val id: Long,
     val title:String,
     // used to map img_src from the JSON to imgSrcUrl in our class
-    @Json(name = "poster_url") val posterUrl: String) : Parcelable
+    @Json(name = "poster_url") val posterUrl: String)
 
 
 //dto para os detalhes dos filmes
-@Parcelize
+@JsonClass(generateAdapter = true)
 data class DetalhesDTO(
     @Json(name = "id")val filmeId:Long,
     @Json(name = "release_date") var year:String,
@@ -43,7 +44,7 @@ data class DetalhesDTO(
     val popularity:Long,
     val overview:String,
     val genres:String
-) : Parcelable
+)
 
 
 //extension function para mapear os Detalhes recebidos da api do filme para o modelo do banco de dados
