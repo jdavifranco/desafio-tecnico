@@ -1,8 +1,10 @@
 package com.jdavifranco.desafio.tokenfilmes.ui.filmes
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -22,7 +24,7 @@ class FilmesGridAdapter():
     }
 
     override fun onBindViewHolder(holder: FilmesViewHolder, position: Int) {
-        var item = getItem(position)
+        val item = getItem(position)
         holder.bind(item)
     }
 
@@ -43,6 +45,15 @@ class FilmesGridAdapter():
             return oldItem.detalhes == newItem.detalhes
         }
 
+    }
+
+    /**
+     * Custom listener that handles clicks on [RecyclerView] items.  Passes the [MarsProperty]
+     * associated with the current item to the [onClick] function.
+     * @param clickListener lambda that will be called with the current [MarsProperty]
+     */
+    class OnClickListener(val clickListener: (filme:Filme) -> Unit) {
+        fun onClick(filme: Filme) = clickListener(filme)
     }
 
 }

@@ -6,7 +6,6 @@ import com.jdavifranco.desafio.tokenfilmes.database.Detalhes
 import com.jdavifranco.desafio.tokenfilmes.database.Filme
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
-import kotlinx.parcelize.Parcelize
 
 /*
 Data transfer objects, essas classes tem como função receber a resposta da api e converter para

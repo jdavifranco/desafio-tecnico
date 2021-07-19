@@ -22,5 +22,9 @@
         <action
             android:id="@+id/action_detalhesFragment_to_filmesFragment"
             app:destination="@id/filmesFragment" />
+        <argument
+            android:name="filmeId"
+            app:argType="long"
+            android:defaultValue="-1L" />
     </fragment>
 </navigation>
