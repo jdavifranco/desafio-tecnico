@@ -1,6 +1,9 @@
 package com.jdavifranco.desafio.tokenfilmes.repository
 
+import android.accounts.NetworkErrorException
+import android.util.Log
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.jdavifranco.desafio.tokenfilmes.database.Filme
 import com.jdavifranco.desafio.tokenfilmes.database.FilmeDao
 import com.jdavifranco.desafio.tokenfilmes.network.FilmesApiService
@@ -23,28 +26,40 @@ class FilmesRepository(private val database:FilmeDao, private val networkSource:
      os dados disponíveis para o usuário o mais atualizados possível.
      */
     val filmes:LiveData<List<Filme>> = database.getAllFilmes()
-
-
+    //variável para tratamento de erros
+    private var _networkError = MutableLiveData<Boolean>(false)
+    val networkError:LiveData<Boolean>
+    get() = _networkError
     //Função para atualizar os dados do banco de dados com os dados do servidor
     suspend fun refreshFilmes(){
         //Utilizando coroutines para fazer a chamada a api e não bloquear a Main Thread.
         withContext(Dispatchers.IO){
-            //Recebe um objeto do tipo FilmesNetowrk que possui como propriedade uma lista de filmesDto
-            //e uma funcao para mapear para database filmes
-            val filmesUpdated= FilmesNetwork(networkSource.getFilmes())
-            database.insertAll(filmesUpdated.asDatabaseFilmesModel())
+            try{
+                //Recebe um objeto do tipo FilmesNetowrk que possui como propriedade uma lista de filmesDto
+                //e uma funcao para mapear para database filmes
+                val filmesUpdated= FilmesNetwork(networkSource.getFilmes())
+                database.insertAll(filmesUpdated.asDatabaseFilmesModel())
+                _networkError.postValue(false)
+            }catch (e:Exception){
+                _networkError.postValue(true)
+            }
         }
     }
 
     //Funcao que atualiza os detalhes de um filme por id
-    suspend fun refreshDetalhesOfFilmeById(filmeId:Long){
+    suspend fun refreshDetalhesOfFilmeById(filmeId:Long) {
         //Utilizando coroutines para fazer a chamada a api e não bloquear a Main Thread.
-        withContext(Dispatchers.IO){
-            val detalhesDTO = networkSource.getFilmeDetalhesById(filmeId)
-            val filme = database.getFilmeById(filmeId)
-            filme.detalhes = detalhesDTO.toDetalhesDatabaseModel()
-            database.updateFilme(filme)
+        withContext(Dispatchers.IO) {
+            try {
+                val detalhesDTO = networkSource.getFilmeDetalhesById(filmeId)
+                val filme = database.getFilmeById(filmeId)
+                filme.detalhes = detalhesDTO.toDetalhesDatabaseModel()
+                database.updateFilme(filme)
+                _networkError.postValue(false)
+            }catch (e:Exception){
+                Log.e("Error", "${e.message}")
+                _networkError.postValue(true)
+            }
         }
     }
-
 }

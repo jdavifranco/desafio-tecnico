@@ -10,6 +10,7 @@ import android.widget.TextView
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.jdavifranco.desafio.tokenfilmes.R
+import com.jdavifranco.desafio.tokenfilmes.databinding.FilmesFragmentBinding
 import com.jdavifranco.desafio.tokenfilmes.util.TokenFilmesApplication
 
 class FilmesFragment : Fragment() {
@@ -18,22 +19,18 @@ class FilmesFragment : Fragment() {
         fun newInstance() = FilmesFragment()
     }
     //Criando ViewModel
-    private val viewModel = ViewModelProvider(
+    private val viewModel by lazy {
+        ViewModelProvider(
         this, FilmesViewModelFactory(TokenFilmesApplication.repository))
-        .get(FilmesViewModel::class.java)
-
+        .get(FilmesViewModel::class.java)}
+    //Data binding
+    private lateinit var binding:FilmesFragmentBinding
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         val view =  inflater.inflate(R.layout.filmes_fragment, container, false)
-        val test:TextView = view.findViewById(R.id.txtRetrofit)
 
-        viewModel.filmes.observe(viewLifecycleOwner, Observer {
-            it?.let {
-                test.text = it.size.toString()
-            }
-        })
 
 
         return view

@@ -1,3 +1,6 @@
 <resources>
+    <!-- Tela Principal Valores String-->
     <string name="app_name">Token Filmes</string>
+    <string name="poster_description">Poster do Filme</string>
+    <string name="titulo_description">Titulo do Filme</string>
 </resources>

@@ -51,10 +51,6 @@ dependencies {
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$version_coroutines"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$version_coroutines"
 
-    //Navigation
-    implementation("androidx.navigation:navigation-fragment-ktx:$version_nav")
-    implementation("androidx.navigation:navigation-ui-ktx:$version_nav")
-
     //Dependencias Room and Lifecycle e Livedata
     implementation "androidx.room:room-runtime:$version_room"
     implementation "androidx.room:room-ktx:$version_room"
@@ -66,6 +62,14 @@ dependencies {
     testImplementation 'org.robolectric:robolectric:4.4'
     // Optional -- Robolectric environment
     testImplementation 'androidx.test:core:1.4.0'
+
+    //Navigation
+    implementation("androidx.navigation:navigation-fragment-ktx:$version_nav")
+    implementation("androidx.navigation:navigation-ui-ktx:$version_nav")
+
+    //Glide
+    implementation "com.github.bumptech.glide:glide:$version_glide"
+    kapt "com.github.bumptech.glide:compiler:$version_glide"
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$version_kotlin"
     implementation 'androidx.core:core-ktx:1.6.0'
