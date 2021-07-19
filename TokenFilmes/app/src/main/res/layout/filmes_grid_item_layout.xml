@@ -9,34 +9,31 @@
             type="com.jdavifranco.desafio.tokenfilmes.database.Filme" />
     </data>
 
-<androidx.coordinatorlayout.widget.CoordinatorLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
-
-    <LinearLayout
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="wrap_content"
+        android:padding="1dp">
 
         <ImageView
             android:id="@+id/filmePoster"
             android:layout_width="match_parent"
-            android:layout_height="70dp"
+            android:layout_height="170dp"
+            android:layout_gravity="center"
             android:contentDescription="@string/poster_description"
-            android:scaleType="fitCenter"
+            android:scaleType="fitXY"
             app:imageUrl="@{filme.postUrl}"
             tools:srcCompat="@android:drawable/ic_popup_sync" />
 
-    </LinearLayout>
-
-    <TextView
-        android:id="@+id/filmeTitle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:contentDescription="@string/titulo_description"
-        android:text="@{filme.title}"
-        tools:text="The Dark Knight"
-        android:gravity="center" />
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+        <TextView
+            android:id="@+id/filmeTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:contentDescription="@string/titulo_description"
+            android:gravity="center"
+            android:text="@{filme.title}"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>
