@@ -3,6 +3,7 @@ package com.jdavifranco.desafio.tokenfilmes
 import android.content.Context
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
+import com.jdavifranco.desafio.tokenfilmes.database.Detalhes
 import com.jdavifranco.desafio.tokenfilmes.database.Filme
 import com.jdavifranco.desafio.tokenfilmes.database.FilmeDao
 import com.jdavifranco.desafio.tokenfilmes.database.FilmeDatabase
@@ -50,12 +51,30 @@ class FilmesDatabaseUnitTest {
     @Test
     @Throws(Exception::class)
     fun insertFilme() {
-        val filme1 = Filme(1, "Velozes e furiosos", "14:00")
-        val filme2 = Filme(2, "Shreck", "14:00")
+        val filme1 = Filme(1, "Velozes e furiosos", "14:00", null)
+        val filme2 = Filme(2, "Shreck", "14:00", null)
         filmeDao.insert(filme1)
         filmeDao.insert(filme2)
         val res = filmeDao.getFilmeById(2)
         Assert.assertEquals("Shreck", res.title)
+    }
+
+    /*
+    Teste do método update da Dao para garantir que os detalhes serão atualizados
+    no banco de dados, quando o método for chamado.
+     */
+    @Test
+    @Throws(Exception::class)
+    fun insertDetalhesToFilme() {
+        val filme1 = Filme(1, "Velozes e furiosos", "14:00", null)
+        val filme2 = Filme(2, "Shreck", "14:00", null)
+        filmeDao.insert(filme1)
+        filmeDao.insert(filme2)
+        var res = filmeDao.getFilmeById(2)
+        res.detalhes = Detalhes("2002", 120, 9.30, 123,
+            "Sinopse do filme", "Animacao, Comedia, infantil")
+        filmeDao.updateFilmeDetalhes(res)
+        Assert.assertEquals("2002", filmeDao.getFilmeById(2).detalhes?.year)
     }
 
     @After

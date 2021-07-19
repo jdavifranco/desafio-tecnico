@@ -1,5 +1,6 @@
 package com.jdavifranco.desafio.tokenfilmes.database
 
+import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
@@ -13,4 +14,15 @@ data class Filme(
     @PrimaryKey
     val id:Long,
     val title:String,
-    val postUrl:String)
+    val postUrl:String,
+    @Embedded var detalhes:Detalhes?
+    )
+
+data class Detalhes(
+    val year: String?,
+    val runtime: Int?,
+    val rating: Double?,
+    val popularity: Long?,
+    val overview: String?,
+    val genres: String?,
+)

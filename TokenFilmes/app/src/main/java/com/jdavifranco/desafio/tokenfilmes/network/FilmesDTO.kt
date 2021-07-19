@@ -6,22 +6,27 @@ import com.squareup.moshi.Json
 import kotlinx.parcelize.Parcelize
 
 /*
-Data transfer object, essa é uma classe cuja função é armazenar os dados recebidos
-através das chamadas http para api.
-id": 19404,
-      "vote_average": 9.3,
-      "title": "Dilwale Dulhania Le Jayenge",
-      "poster_url": "https://image.tmdb.org/t/p/w200/uC6TTUhPpQCmgldGyYveKRAu8JN.jpg",
-      "genres": [
-        "Comedy",
-        "Drama",
-        "Romance"
-      ],
-      "release_date": "1995-10-20"
- */
+Data transfer objects, essas classes tem como função receber os objetos convertidos
+das chamadas http
+*/
+
+//dto que recebe a chamada http para filmes que serão exibidos na lista de filmes
 @Parcelize
 data class FilmesDTO(
     val id: Long,
     val title:String,
     // used to map img_src from the JSON to imgSrcUrl in our class
     @Json(name = "poster_url") val poster_src: String) : Parcelable
+
+//dto que recebe a chamada http para detalhes de um filme que serão exibidos na tela de detalhes
+
+@Parcelize
+data class DetalhesDTO(
+    @Json(name = "id")val filmeId:Long,
+    @Json(name = "release_date") val year:String,
+    val runtime:Int,
+    @Json(name = "vote_average") val rating:Double,
+    val popularity:Long,
+    val overview:String,
+    val genres:List<String>
+) : Parcelable
