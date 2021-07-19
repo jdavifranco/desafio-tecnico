@@ -38,8 +38,6 @@ abstract class FilmeDatabase : RoomDatabase(){
             que permite que apenas uma thread acesse o bloco por vez
              */
             synchronized(this) {
-
-                // copia o valor para uma var normal para poder usar o smart cast
                 var instance = INSTANCE
 
                 // se a instance for null, cria uma nova database e guarda em instance
@@ -53,7 +51,7 @@ abstract class FilmeDatabase : RoomDatabase(){
                     INSTANCE = instance
                 }
 
-                // Retorna a instance pois dessa forma com o smart cast, garante que será nao nula
+                // Retorna a instance
                 return instance
             }
         }

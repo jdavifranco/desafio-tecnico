@@ -18,39 +18,33 @@ os dados recebidos para objetos kotlin
 //O objeto que implementa
 interface FilmesApiService {
     @GET("movies")
-    suspend fun getFilmes(): List<FilmesDTO>
+    suspend fun getFilmes(): FilmesNetwork
 
     @GET(value = "movies/")
     suspend fun getFilmeDetalhesById(@Query("filmeId") filmeID:Long):DetalhesDTO
-}
 
-/*
-Create moshi object para ser usado pelo retrofit como converter
-Moshi é uma biblioteca json que facilita a conversao de json para objetos java
-https://github.com/square/moshi
-*/
-private val moshi = Moshi.Builder()
-    .add(KotlinJsonAdapterFactory())
-    .build()
+    companion object{
+        //Base Url
+        const val BASE_URL = "https://desafio-mobile.nyc3.digitaloceanspaces.com/"
+        fun getRetrofit():Retrofit {
+            /*
+            Create moshi object para ser usado pelo retrofit como converter
+            Moshi é uma biblioteca json que facilita a conversao de json para objetos java
+            https://github.com/square/moshi
+            */
+            val moshi = Moshi.Builder()
+                .add(KotlinJsonAdapterFactory())
+                .build()
 
-//Base Url
-private const val BASE_URL = "https://desafio-mobile.nyc3.digitaloceanspaces.com/"
+            //criando o objeto retrofit que servirá para criar a api
+            val retrofit = Retrofit.Builder()
+                .baseUrl(BASE_URL)
+                .addConverterFactory(MoshiConverterFactory.create(moshi))
+                .build()
 
-//criando o objeto retrofit
-private val retrofit = Retrofit.Builder()
-    .baseUrl(BASE_URL)
-    .addConverterFactory(MoshiConverterFactory.create(moshi))
-    .build()
-
-/*Singleton object pois apenas uma instancia do retrofitservice estara disponível
-para acesso a api
- */
-object FilmesApi{
-    //by lazy significa que será inicializado somente quando for necessário
-    val retrofitService : FilmesApiService by lazy {
-        retrofit.create(FilmesApiService::class.java)
+            return retrofit
+        }
     }
-
 }
 
 

@@ -1,24 +1,22 @@
 package com.jdavifranco.desafio.tokenfilmes.database
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.Query
-import androidx.room.Update
+import androidx.lifecycle.LiveData
+import androidx.room.*
 
 @Dao
 interface FilmeDao {
-    @Insert
-    fun insert(filme: Filme)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertAll(filmes: List<Filme>)
+
+    @Update
+    suspend fun updateFilme(filme: Filme)
 
     @Query("DELETE FROM table_filme")
-    fun deleteAll()
+    suspend fun deleteAll()
 
     @Query("SELECT * FROM table_filme")
-    fun getAllFilmes():List<Filme>
+    fun getAllFilmes():LiveData<List<Filme>>
 
     @Query("select * from table_filme where id = :id")
     fun getFilmeById(id:Long):Filme
-
-    @Update
-    fun updateFilmeDetalhes(filme: Filme)
 }
