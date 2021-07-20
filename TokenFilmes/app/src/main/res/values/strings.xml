@@ -3,4 +3,5 @@
     <string name="app_name">Token Filmes</string>
     <string name="poster_description">Poster do Filme</string>
     <string name="titulo_description">Titulo do Filme</string>
+    <string name="info_description">Ano e avaliação</string>
 </resources>

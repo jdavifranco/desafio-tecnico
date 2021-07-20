@@ -21,6 +21,8 @@ fun FilmesNetwork.asDatabaseFilmesModel():  List<Filme> {
             id = it.id,
             title = it.title,
             postUrl= it.posterUrl,
+            year = it.year,
+            vote=it.vote,
             detalhes = null)
     }
 }
@@ -30,16 +32,15 @@ data class FilmesDTO(
     val id: Long,
     val title:String,
     // used to map img_src from the JSON to imgSrcUrl in our class
-    @Json(name = "poster_url") val posterUrl: String)
+    @Json(name = "poster_url") val posterUrl: String,
+    @Json(name = "release_date") val year:String,
+    @Json(name = "vote_average") val vote:Double)
 
 
 //dto para os detalhes dos filmes
 @JsonClass(generateAdapter = true)
 data class DetalhesDTO(
-    @Json(name = "id")val filmeId:Long,
-    @Json(name = "release_date") var year:String,
     var runtime:Int,
-    @Json(name = "vote_average") val rating:Double,
     val popularity:Long,
     val overview:String,
     val genres:String
@@ -48,9 +49,7 @@ data class DetalhesDTO(
 
 //extension function para mapear os Detalhes recebidos da api do filme para o modelo do banco de dados
 fun DetalhesDTO.toDetalhesDatabaseModel() = Detalhes(
-    year = year,
     runtime = runtime,
-    rating = rating,
     popularity = popularity,
     overview = overview,
     genres = genres

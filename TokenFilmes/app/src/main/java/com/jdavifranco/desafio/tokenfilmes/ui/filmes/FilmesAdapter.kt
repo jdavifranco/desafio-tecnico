@@ -1,23 +1,20 @@
 package com.jdavifranco.desafio.tokenfilmes.ui.filmes
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
-import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.jdavifranco.desafio.tokenfilmes.database.Filme
-import com.jdavifranco.desafio.tokenfilmes.databinding.FilmesGridItemLayoutBinding
+import com.jdavifranco.desafio.tokenfilmes.databinding.FilmesItemLayoutBinding
 
-class FilmesGridAdapter():
-    ListAdapter<Filme, FilmesGridAdapter.FilmesViewHolder>(
+class FilmesAdapter():
+    ListAdapter<Filme, FilmesAdapter.FilmesViewHolder>(
     FilmesDiffCallBack()){
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FilmesViewHolder {
         //Cria o  binding
-        val binding = FilmesGridItemLayoutBinding.inflate(
+        val binding = FilmesItemLayoutBinding.inflate(
             LayoutInflater.from(parent.context))
 
         return FilmesViewHolder(binding)
@@ -28,7 +25,7 @@ class FilmesGridAdapter():
         holder.bind(item)
     }
 
-    class FilmesViewHolder(private var binding: FilmesGridItemLayoutBinding):
+    class FilmesViewHolder(private var binding: FilmesItemLayoutBinding):
         RecyclerView.ViewHolder(binding.root) {
         fun bind(filme: Filme) {
             binding.filme = filme

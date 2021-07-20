@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="filme"
+            type="com.jdavifranco.desafio.tokenfilmes.database.Filme" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="8dp">
+
+        <ImageView
+            android:id="@+id/imgPoster"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_gravity="start"
+            android:contentDescription="@string/poster_description"
+            android:scaleType="fitXY"
+            app:imageUrl="@{filme.postUrl}"
+            tools:srcCompat="@drawable/ic_broken_image" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp">
+
+            <TextView
+                android:id="@+id/txtTitulo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:capitalize="words"
+                android:contentDescription="@string/titulo_description"
+                android:freezesText="true"
+                android:padding="2dp"
+                android:text="@{filme.title}"
+                android:textSize="16sp"
+                tools:text="The Dark Knight" />
+
+            <TextView
+                android:id="@+id/txtInfo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:contentDescription="@string/info_description"
+                android:drawableEnd="@drawable/ic_star_rate_24"
+                android:foregroundGravity="center"
+                android:gravity="start"
+                android:padding="2dp"
+                android:textSize="14sp"
+                app:filmeInfo="@{filme}"
+                tools:text="2020 - 9.8" />
+        </LinearLayout>
+    </LinearLayout>
+</layout>

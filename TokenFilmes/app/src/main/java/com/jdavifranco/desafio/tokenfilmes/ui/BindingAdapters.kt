@@ -1,11 +1,14 @@
 package com.jdavifranco.desafio.tokenfilmes.ui
 
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.core.net.toUri
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.jdavifranco.desafio.tokenfilmes.R
+import com.jdavifranco.desafio.tokenfilmes.database.Filme
+import java.time.Year
 
 
 /**
@@ -23,4 +26,9 @@ fun bindImage(imgView: ImageView, imgUrl: String?) {
                 .error(R.drawable.ic_broken_image))
             .into(imgView)
     }
+}
+@BindingAdapter("filmeInfo")
+fun bindFilmeInfo(textView: TextView, filme:Filme){
+    val info = "${filme.year} - ${filme.vote}"
+    textView.text = info
 }
