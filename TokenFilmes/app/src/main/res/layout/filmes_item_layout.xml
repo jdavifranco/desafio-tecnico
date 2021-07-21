@@ -5,6 +5,9 @@
 
     <data>
         <variable
+            name="filmeViewModel"
+            type="com.jdavifranco.desafio.tokenfilmes.ui.filmes.FilmesViewModel" />
+        <variable
             name="filme"
             type="com.jdavifranco.desafio.tokenfilmes.database.Filme" />
     </data>

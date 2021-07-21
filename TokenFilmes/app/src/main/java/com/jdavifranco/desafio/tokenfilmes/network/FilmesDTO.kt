@@ -1,7 +1,6 @@
 package com.jdavifranco.desafio.tokenfilmes.network
 
 
-import android.os.Parcelable
 import com.jdavifranco.desafio.tokenfilmes.database.Detalhes
 import com.jdavifranco.desafio.tokenfilmes.database.Filme
 import com.squareup.moshi.Json
@@ -36,21 +35,20 @@ data class FilmesDTO(
     @Json(name = "release_date") val year:String,
     @Json(name = "vote_average") val vote:Double)
 
-
 //dto para os detalhes dos filmes
-@JsonClass(generateAdapter = true)
 data class DetalhesDTO(
-    var runtime:Int,
-    val popularity:Long,
+    @Json(name = "id")val filmeId:Long,
+    @Json(name = "release_date") val year:String,
+    val runtime:Int,
+    val popularity:Double,
     val overview:String,
-    val genres:String
+    val genres:List<String>
 )
-
 
 //extension function para mapear os Detalhes recebidos da api do filme para o modelo do banco de dados
 fun DetalhesDTO.toDetalhesDatabaseModel() = Detalhes(
     runtime = runtime,
     popularity = popularity,
     overview = overview,
-    genres = genres
+    genres = genres.toString()
 )

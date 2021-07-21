@@ -22,7 +22,7 @@ data class Filme(
 
 data class Detalhes(
     val runtime: Int?,
-    val popularity: Long?,
+    val popularity: Double?,
     val overview: String?,
     val genres: String?,
 )

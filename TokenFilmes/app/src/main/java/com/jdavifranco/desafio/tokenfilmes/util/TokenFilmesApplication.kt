@@ -4,7 +4,6 @@ import android.app.Application
 import com.jdavifranco.desafio.tokenfilmes.database.FilmeDatabase
 import com.jdavifranco.desafio.tokenfilmes.network.FilmesApiService
 import com.jdavifranco.desafio.tokenfilmes.repository.FilmesRepository
-import retrofit2.Retrofit
 
 /*
 Essa classe herda da classe padrão Application do android
@@ -14,7 +13,7 @@ do contexto da aplicação.
 class TokenFilmesApplication :Application() {
     private val database by lazy { FilmeDatabase.getInstance(this).filmeDao }
     private val retrofitApiService by lazy {
-        FilmesApiService.getRetrofit().create(FilmesApiService::class.java)
+        FilmesApiService.getRetrofitBuilder().create(FilmesApiService::class.java)
     }
 
     companion object{

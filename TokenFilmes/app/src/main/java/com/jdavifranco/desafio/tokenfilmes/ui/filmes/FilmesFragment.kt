@@ -13,7 +13,9 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.jdavifranco.desafio.tokenfilmes.R
+import com.jdavifranco.desafio.tokenfilmes.database.Filme
 import com.jdavifranco.desafio.tokenfilmes.databinding.FilmesFragmentBinding
+import com.jdavifranco.desafio.tokenfilmes.ui.ViewModelFactory
 import com.jdavifranco.desafio.tokenfilmes.util.TokenFilmesApplication
 
 class FilmesFragment : Fragment() {
@@ -24,11 +26,13 @@ class FilmesFragment : Fragment() {
     //Criando ViewModel
     private val viewModel by lazy {
         ViewModelProvider(
-        this, FilmesViewModelFactory(TokenFilmesApplication.repository))
+        this, ViewModelFactory(TokenFilmesApplication.repository)
+        )
         .get(FilmesViewModel::class.java)}
 
     //Data binding
     private lateinit var binding:FilmesFragmentBinding
+    //adapter para o recyclerView
     private lateinit var adapter: FilmesAdapter
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -40,7 +44,8 @@ class FilmesFragment : Fragment() {
         binding.rvFilmes.adapter = adapter
         binding.rvFilmes.addItemDecoration(DividerItemDecoration(context, LinearLayoutManager.VERTICAL))
         binding.rvFilmes.setHasFixedSize(true)
-
+        //Utilizando LiveData para observar os estado da lista de fimes no viewModel e atualizar
+        //sempre que houver mudanças
         viewModel.filmes.observe(viewLifecycleOwner, Observer {
             it?.let {
                 adapter.submitList(it)
@@ -50,6 +55,4 @@ class FilmesFragment : Fragment() {
 
         return binding.root
     }
-
-
 }

@@ -2,11 +2,19 @@ package com.jdavifranco.desafio.tokenfilmes.ui.filmes
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.jdavifranco.desafio.tokenfilmes.database.Filme
 import com.jdavifranco.desafio.tokenfilmes.databinding.FilmesItemLayoutBinding
+
+/*
+Essa classe é uma
+ */
+class FilmeClickListener(val clickListener: (sleepId: Long) -> Unit) {
+    fun onClick(filme: Filme) = clickListener(filme.id)
+}
 
 class FilmesAdapter():
     ListAdapter<Filme, FilmesAdapter.FilmesViewHolder>(
@@ -27,10 +35,19 @@ class FilmesAdapter():
 
     class FilmesViewHolder(private var binding: FilmesItemLayoutBinding):
         RecyclerView.ViewHolder(binding.root) {
+
         fun bind(filme: Filme) {
             binding.filme = filme
+            clicklistener(filme.id)
             binding.executePendingBindings()
+
         }
+        private fun clicklistener(filmeId: Long){
+            binding.root.setOnClickListener {
+                it.findNavController().navigate(FilmesFragmentDirections.actionFilmesFragmentToDetalhesFragment(filmeId))
+            }
+        }
+
     }
 
     class FilmesDiffCallBack():DiffUtil.ItemCallback<Filme>(){

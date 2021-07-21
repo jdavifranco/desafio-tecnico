@@ -11,7 +11,7 @@ será responsável por guardar ou criar uma instancia do Banco de dados caso
 nao exista. É um singleton.
  */
 
-@Database(entities = [Filme::class], version = 2, exportSchema = false)
+@Database(entities = [Filme::class], version = 3, exportSchema = false)
 abstract class FilmeDatabase : RoomDatabase(){
     /*
     Conecta a database ao DAO.

@@ -24,7 +24,6 @@
             app:destination="@id/filmesFragment" />
         <argument
             android:name="filmeId"
-            app:argType="long"
-            android:defaultValue="-1L" />
+            app:argType="long" />
     </fragment>
 </navigation>

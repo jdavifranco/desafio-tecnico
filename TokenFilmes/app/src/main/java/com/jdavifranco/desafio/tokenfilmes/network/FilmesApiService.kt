@@ -1,11 +1,12 @@
 package com.jdavifranco.desafio.tokenfilmes.network
 
+
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.GET
-import retrofit2.http.Query
+import retrofit2.http.Path
 
 /*
 Interface que contém as chamadas para a api, essas chamadas serão feitas
@@ -20,30 +21,27 @@ interface FilmesApiService {
     @GET("movies")
     suspend fun getFilmes(): List<FilmesDTO>
 
-    @GET(value = "movies/")
-    suspend fun getFilmeDetalhesById(@Query("filmeId") filmeID:Long):DetalhesDTO
+    @GET("movies/{id}")
+    suspend fun getFilmeDetalhesById(@Path("id") filmeID:Long):DetalhesDTO
 
     companion object{
-        //Base Url
-        const val BASE_URL = "https://desafio-mobile.nyc3.digitaloceanspaces.com/"
-        fun getRetrofit():Retrofit {
-            /*
-            Create moshi object para ser usado pelo retrofit como converter
-            Moshi é uma biblioteca json que facilita a conversao de json para objetos java
-            https://github.com/square/moshi
-            */
-            val moshi = Moshi.Builder()
-                .add(KotlinJsonAdapterFactory())
-                .build()
-            //criando o objeto retrofit que servirá para criar a api
-            val retrofit = Retrofit.Builder()
-                .baseUrl(BASE_URL)
-                .addConverterFactory(MoshiConverterFactory.create())
-                .build()
+        private const val BASE_URL = "https://desafio-mobile.nyc3.digitaloceanspaces.com/"
+        /*
+        Create moshi object para ser usado pelo retrofit como converter
+        Moshi é uma biblioteca json que facilita a conversao de json para objetos java
+        https://github.com/square/moshi
+        */
+        private val moshi = Moshi.Builder()
+            .add(KotlinJsonAdapterFactory())
+            .build()
 
-            return retrofit
-        }
+        //criando o objeto retrofit que servirá para criar a api
+        private val retrofit = Retrofit.Builder()
+            .baseUrl(BASE_URL)
+            .addConverterFactory(MoshiConverterFactory.create(moshi))
+            .build()
+
+        fun getRetrofitBuilder():Retrofit  = retrofit
     }
+
 }
-
-

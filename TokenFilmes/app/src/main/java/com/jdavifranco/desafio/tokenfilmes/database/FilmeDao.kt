@@ -18,5 +18,8 @@ interface FilmeDao {
     fun getAllFilmes():LiveData<List<Filme>>
 
     @Query("select * from table_filme where id = :id")
-    fun getFilmeById(id:Long):Filme
+    fun getLiveDataFilmeById(id:Long):LiveData<Filme>
+
+    @Query(value = "select * from table_filme where id= :id")
+    fun getFilmeById(id: Long):Filme
 }
