@@ -14,17 +14,18 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layoutDetalhes"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".ui.detalhes.DetalhesFragment">
 
-
         <ImageView
             android:id="@+id/imgDetailPoster"
+            imageUrl="@{filme.postUrl}"
             android:layout_width="0dp"
             android:layout_height="200dp"
             android:contentDescription="@string/poster_detail"
-            imageUrl="@{filme.postUrl}"
+            android:scaleType="fitXY"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"

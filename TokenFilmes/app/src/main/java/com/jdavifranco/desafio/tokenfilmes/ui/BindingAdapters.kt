@@ -1,5 +1,6 @@
 package com.jdavifranco.desafio.tokenfilmes.ui
 
+import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.net.toUri
@@ -8,6 +9,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.jdavifranco.desafio.tokenfilmes.R
 import com.jdavifranco.desafio.tokenfilmes.database.Filme
+import com.jdavifranco.desafio.tokenfilmes.repository.FilmesApiStatus
 import java.time.Year
 
 
@@ -29,6 +31,22 @@ fun bindImage(imgView: ImageView, imgUrl: String?) {
 }
 @BindingAdapter("filmeInfo")
 fun bindFilmeInfo(textView: TextView, filme:Filme){
-    val info = "${filme.year} - ${filme.vote}"
+    val info = "${filme.year.subSequence(0,4)} - ${filme.vote}"
     textView.text = info
+}
+@BindingAdapter("apiStatus")
+fun bindStatus(statusImageView: ImageView, status:FilmesApiStatus?) {
+    when (status) {
+        FilmesApiStatus.LOADING -> {
+            statusImageView.visibility = View.VISIBLE
+            statusImageView.setImageResource(R.drawable.loading_animation)
+        }
+        FilmesApiStatus.ERROR -> {
+            statusImageView.visibility = View.VISIBLE
+            statusImageView.setImageResource(R.drawable.ic_connection_error)
+        }
+        FilmesApiStatus.DONE -> {
+            statusImageView.visibility = View.GONE
+        }
+    }
 }

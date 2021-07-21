@@ -12,9 +12,17 @@ import kotlinx.coroutines.launch
 class FilmesViewModel(private val _repository:FilmesRepository) : ViewModel() {
     //Variavel LiveData recebida do repositorio
     val filmes:LiveData<List<Filme>>
-    get() = _repository.getFilmes(viewModelScope)
+    get() = _repository.filmes
+    //Variavel que guarda o estado das chamadas
+    val networkResult = _repository.apiStatus
+    init {
+        refresh()
+    }
+    fun refresh(){
+        viewModelScope.launch {
+            _repository.refreshFilmes()
+        }
+    }
 
-
-    val networkError = liveData<Boolean> { _repository.networkError }
 
 }

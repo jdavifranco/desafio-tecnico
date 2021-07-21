@@ -25,47 +25,44 @@ referencia para api para comunicar com o servidor criada usando a biblioteca ret
   e em segundo plano são atualizados com os dados da api, caso haja internet, dessa forma mantendo
   os dados disponíveis para o usuário o mais atualizados possível.
  */
-
+enum class FilmesApiStatus{LOADING, DONE, ERROR}
 class FilmesRepository(private val database:FilmeDao, private val networkSource:FilmesApiService) {
+    //Lista de filmes atualizada
+    private var _filmes = MutableLiveData<List<Filme>>()
+    val filmes:LiveData<List<Filme>>
+    get() = _filmes
 
     //variável para tratamento de erros
-    private var _networkError = MutableLiveData<Boolean>(false)
-    val networkError:LiveData<Boolean>
-    get() = _networkError
+    private var _apiStatus = MutableLiveData<FilmesApiStatus>()
+    val apiStatus:LiveData<FilmesApiStatus>
+    get() = _apiStatus
 
-    fun getFilmeById(id:Long, coroutineScope: CoroutineScope):LiveData<Filme>{
-        coroutineScope.launch {
-            refreshDetalhesOfFilmeById(id)
-        }
-        return database.getLiveDataFilmeById(id)
-    }
-
-    fun getFilmes(coroutineScope: CoroutineScope):LiveData<List<Filme>>{
-        coroutineScope.launch {
-            refreshFilmes()
-        }
-        return database.getAllFilmes()
+    suspend fun getFilmeByID(id:Long):Filme{
+        return database.getFilmeById(id)
     }
 
     //Função para atualizar os dados do banco de dados com os dados do servidor
-    private suspend fun refreshFilmes(){
+    suspend fun refreshFilmes(){
         //Utilizando coroutines para fazer a chamada a api e não bloquear a Main Thread.
+        _apiStatus.postValue(FilmesApiStatus.LOADING)
         withContext(Dispatchers.IO){
             try{
                 //Recebe um objeto do tipo FilmesNetowrk que possui como propriedade uma lista de filmesDto
                 //e uma funcao para mapear para database filmes
                 val filmesUpdated= FilmesNetwork(networkSource.getFilmes())
                 database.insertAll(filmesUpdated.asDatabaseFilmesModel())
-                _networkError.postValue(false)
+                _filmes.postValue(database.getAllFilmes())
+                _apiStatus.postValue(FilmesApiStatus.DONE)
             }catch (e:Exception){
-                _networkError.postValue(true)
+                _apiStatus.postValue(FilmesApiStatus.ERROR)
             }
         }
     }
 
     //Funcao que atualiza os detalhes de um filme por id
-    private suspend fun refreshDetalhesOfFilmeById(filmeId:Long) {
+    suspend fun refreshDetalhesOfFilmeById(filmeId:Long) {
         //Utilizando coroutines para fazer a chamada a api e não bloquear a Main Thread.
+        _apiStatus.postValue(FilmesApiStatus.LOADING)
         withContext(Dispatchers.IO) {
             try {
                 val detalhesDTO = networkSource.getFilmeDetalhesById(filmeId)
@@ -73,10 +70,11 @@ class FilmesRepository(private val database:FilmeDao, private val networkSource:
                 val filme = database.getFilmeById(filmeId)
                 filme.detalhes = detalhesDTO.toDetalhesDatabaseModel()
                 database.updateFilme(filme)
-                _networkError.postValue(false)
+                _filmes.postValue(database.getAllFilmes())
+                _apiStatus.postValue(FilmesApiStatus.DONE)
             }catch (e:Exception){
                 Log.e("Error", "${e.message}")
-                _networkError.postValue(true)
+                _apiStatus.postValue(FilmesApiStatus.ERROR)
             }
         }
     }

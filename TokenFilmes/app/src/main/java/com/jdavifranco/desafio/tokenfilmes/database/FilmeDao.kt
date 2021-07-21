@@ -15,11 +15,8 @@ interface FilmeDao {
     suspend fun deleteAll()
 
     @Query("SELECT * FROM table_filme")
-    fun getAllFilmes():LiveData<List<Filme>>
-
-    @Query("select * from table_filme where id = :id")
-    fun getLiveDataFilmeById(id:Long):LiveData<Filme>
+    fun getAllFilmes():List<Filme>
 
     @Query(value = "select * from table_filme where id= :id")
-    fun getFilmeById(id: Long):Filme
+    suspend fun getFilmeById(id: Long):Filme
 }

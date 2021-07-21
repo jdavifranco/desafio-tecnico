@@ -10,4 +10,9 @@
     <string name="sinopse_detail">Sinopse do Filme</string>
     <string name="genre_detail">Gêneros do Filme</string>
     <string name="info_detail">Ano e Duração do Filme</string>
+    <string name="btn_atualizar">Atualizar</string>
+    <string name="error_description">Não Foi possível carregar as informações. Verifique sua conexão e tente novamente</string>
+    <string name="error_title">Ocorreu um erro</string>
+    <string name="content_error_description">Mensagem de erro</string>
+    <string name="content_btn_atualizar">Botão atualizar tela</string>
 </resources>
