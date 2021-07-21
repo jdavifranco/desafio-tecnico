@@ -4,4 +4,10 @@
     <string name="poster_description">Poster do Filme</string>
     <string name="titulo_description">Titulo do Filme</string>
     <string name="info_description">Ano e avaliação</string>
+    <string name="poster_detail">Poster Detalhado</string>
+    <string name="rate_detail">Avaliação do Filme</string>
+    <string name="pop_detail">Popularidade do Filme</string>
+    <string name="sinopse_detail">Sinopse do Filme</string>
+    <string name="genre_detail">Gêneros do Filme</string>
+    <string name="info_detail">Ano e Duração do Filme</string>
 </resources>
