@@ -13,10 +13,11 @@ import com.jdavifranco.desafio.tokenfilmes.repository.FilmesApiStatus
 import com.jdavifranco.desafio.tokenfilmes.ui.detalhes.DetalhesViewModel
 import com.jdavifranco.desafio.tokenfilmes.ui.filmes.FilmesViewModel
 import java.time.Year
-
+//Neste arquivos estão todos os bind adapters para
+//inserir conteúdo nos elementos da ui por DataBinding
 
 /**
- * Uses the Glide library to load an image by URL into an [ImageView]
+ * Usando a biblioteca glide para carregar a imagem de uma url para o ImgView
  */
 @BindingAdapter("imageUrl")
 fun bindImage(imgView: ImageView, imgUrl: String?) {
@@ -31,26 +32,8 @@ fun bindImage(imgView: ImageView, imgUrl: String?) {
             .into(imgView)
     }
 }
-@BindingAdapter("detailImage")
-fun bindDetailImage(imgView: ImageView, imgUrl: String?) {
-    imgUrl?.let {
-        val imgUri = imgUrl.toUri().buildUpon().scheme("https").build()
-        Glide.with(imgView.context)
-            .load(imgUri)
-            .apply(
-                RequestOptions()
-                    .placeholder(R.drawable.loading_animation)
-                    .error(R.drawable.ic_broken_image))
-            .into(imgView)
-    }
 
-}
-@BindingAdapter("filmeInfo")
-fun bindFilmeInfo(textView: TextView, filme:Filme){
-    val info = "${filme.year.subSequence(0,4)} - ${filme.vote}"
-    textView.text = info
-}
-
+//ImageView que informa o status da conexão com a api
 @BindingAdapter("apiStatus")
 fun bindStatus(statusImageView: ImageView, status: FilmesApiStatus?) {
     when (status) {
@@ -68,28 +51,14 @@ fun bindStatus(statusImageView: ImageView, status: FilmesApiStatus?) {
     }
 }
 
-@BindingAdapter("apiStatusDetalhes")
-fun bindStatusDetail(statusImageView: ImageView, viewModel: DetalhesViewModel?) {
-    when (viewModel?.networkResult?.value) {
-        FilmesApiStatus.LOADING -> {
-            statusImageView.visibility = View.VISIBLE
-            statusImageView.setImageResource(R.drawable.loading_animation)
-        }
-        FilmesApiStatus.ERROR -> {
-            if(viewModel.filme?.value==null) {
-                statusImageView.visibility = View.VISIBLE
-                statusImageView.setImageResource(R.drawable.ic_connection_error)
-            }
-            else{
-                statusImageView.visibility = View.GONE
-            }
-        }
-        FilmesApiStatus.DONE -> {
-            statusImageView.visibility = View.GONE
-        }
-    }
-}
 //DetailInfo, VOte, Popularity, genres
+
+@BindingAdapter("filmeInfo")
+fun bindFilmeInfo(textView: TextView, filme:Filme){
+    val info = "${filme.year.subSequence(0,4)} - ${filme.vote}"
+    textView.text = info
+}
+
 @BindingAdapter("detailInfo")
 fun bindDetailInfo(textView: TextView, filme: Filme?){
     textView.text = "${filme?.year?.subSequence(0, 4)} - ${filme?.detalhes?.runtime} min"
