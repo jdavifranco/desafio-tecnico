@@ -71,14 +71,13 @@ class FilmesRepository(private val database:FilmeDao, private val networkSource:
         withContext(Dispatchers.IO) {
             try {
                 val detalhesDTO = networkSource.getFilmeDetalhesById(filmeId)
-                Log.e("Result List DetalhesDto", "$detalhesDTO")
                 val filme = database.getFilmeById(filmeId)
                 filme.detalhes = detalhesDTO.toDetalhesDatabaseModel()
                 database.updateFilme(filme)
                 _filmes.postValue(database.getAllFilmes())
                 _apiStatus.postValue(FilmesApiStatus.DONE)
             }catch (e:Exception){
-                Log.e("Error", "${e.message}")
+                //caso a conexao falhe mas o dado esteja salvo no banco de dados
                 if(_filmes.value!=null){
                     _apiStatus.postValue(FilmesApiStatus.DONE)
                 }
