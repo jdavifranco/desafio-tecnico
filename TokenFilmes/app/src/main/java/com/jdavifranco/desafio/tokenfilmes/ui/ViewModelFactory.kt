@@ -5,7 +5,9 @@ import androidx.lifecycle.ViewModelProvider
 import com.jdavifranco.desafio.tokenfilmes.repository.FilmesRepository
 import com.jdavifranco.desafio.tokenfilmes.ui.detalhes.DetalhesViewModel
 import com.jdavifranco.desafio.tokenfilmes.ui.filmes.FilmesViewModel
-
+/* Factory que cria um FilmeViewModel e um DetalhesViewModel com os
+parametros necessários
+ */
 class ViewModelFactory(private val repository: FilmesRepository) : ViewModelProvider.Factory {
     private var filmeId: Long = 0
     constructor(repository: FilmesRepository, filmeId:Long):this(repository){

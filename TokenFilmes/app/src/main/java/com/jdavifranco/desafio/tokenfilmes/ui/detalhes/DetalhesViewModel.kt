@@ -14,7 +14,7 @@ class DetalhesViewModel(private val _repository: FilmesRepository, private val f
     init {
         resfreshDetalhesFilme(filmeId)
     }
-
+    //função para atualizar os dados de um filme, chamada para api
     fun resfreshDetalhesFilme(id:Long){
         viewModelScope.launch {
             _repository.refreshDetalhesOfFilmeById(id)

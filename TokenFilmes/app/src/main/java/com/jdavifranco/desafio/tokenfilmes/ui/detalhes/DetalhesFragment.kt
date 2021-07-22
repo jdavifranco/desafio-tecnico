@@ -18,10 +18,6 @@ import com.jdavifranco.desafio.tokenfilmes.util.TokenFilmesApplication
 
 class DetalhesFragment : Fragment() {
 
-    companion object {
-        fun newInstance() = DetalhesFragment()
-    }
-
     private val args:DetalhesFragmentArgs by navArgs()
     //Criando ViewModel
     private lateinit var viewModel :DetalhesViewModel

@@ -18,6 +18,7 @@ class FilmesViewModel(private val _repository:FilmesRepository) : ViewModel() {
     init {
         refresh()
     }
+    //Atualiza os filmes fazendo uma chamada para api
     fun refresh(){
         viewModelScope.launch {
             _repository.refreshFilmes()

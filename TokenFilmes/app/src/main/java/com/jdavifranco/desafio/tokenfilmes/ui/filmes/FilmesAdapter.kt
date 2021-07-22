@@ -10,11 +10,8 @@ import com.jdavifranco.desafio.tokenfilmes.database.Filme
 import com.jdavifranco.desafio.tokenfilmes.databinding.FilmesItemLayoutBinding
 
 /*
-Essa classe é uma
+List Adapter para o recyclerVIew
  */
-class FilmeClickListener(val clickListener: (sleepId: Long) -> Unit) {
-    fun onClick(filme: Filme) = clickListener(filme.id)
-}
 
 class FilmesAdapter():
     ListAdapter<Filme, FilmesAdapter.FilmesViewHolder>(
@@ -59,15 +56,6 @@ class FilmesAdapter():
             return oldItem.detalhes == newItem.detalhes
         }
 
-    }
-
-    /**
-     * Custom listener that handles clicks on [RecyclerView] items.  Passes the [MarsProperty]
-     * associated with the current item to the [onClick] function.
-     * @param clickListener lambda that will be called with the current [MarsProperty]
-     */
-    class OnClickListener(val clickListener: (filme:Filme) -> Unit) {
-        fun onClick(filme: Filme) = clickListener(filme)
     }
 
 }

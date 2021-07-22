@@ -19,9 +19,6 @@ import com.jdavifranco.desafio.tokenfilmes.util.TokenFilmesApplication
 
 class FilmesFragment : Fragment() {
 
-    companion object {
-        fun newInstance() = FilmesFragment()
-    }
     //Criando ViewModel
     private val viewModel by lazy {
         ViewModelProvider(

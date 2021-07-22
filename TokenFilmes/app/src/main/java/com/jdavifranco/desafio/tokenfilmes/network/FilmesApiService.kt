@@ -15,8 +15,6 @@ A biblioteca retrofit cria as chamadas http com base nos parâmetros
 passados: A Url Base e um ConverterFactory  que deve saber como converter
 os dados recebidos para objetos kotlin
  */
-//Apenas um método que requisita todos os filmes
-//O objeto que implementa
 interface FilmesApiService {
     @GET("movies")
     suspend fun getFilmes(): List<FilmesDTO>
@@ -24,6 +22,7 @@ interface FilmesApiService {
     @GET("movies/{id}")
     suspend fun getFilmeDetalhesById(@Path("id") filmeID:Long):DetalhesDTO
 
+    //Criando o retrofit object como companion object para encapsulamento
     companion object{
         private const val BASE_URL = "https://desafio-mobile.nyc3.digitaloceanspaces.com/"
         /*

@@ -22,7 +22,7 @@ class TokenFilmesApplication :Application() {
 
     override fun onCreate() {
         super.onCreate()
-        repository = FilmesRepository(database, retrofitApiService)
+        repository =  FilmesRepository(database, retrofitApiService)
     }
 
 }
