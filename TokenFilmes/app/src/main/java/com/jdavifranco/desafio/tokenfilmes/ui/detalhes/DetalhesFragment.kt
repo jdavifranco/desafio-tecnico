@@ -11,6 +11,7 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.navArgs
 import com.jdavifranco.desafio.tokenfilmes.R
 import com.jdavifranco.desafio.tokenfilmes.databinding.DetalhesFragmentBinding
+import com.jdavifranco.desafio.tokenfilmes.repository.FilmesApiStatus
 import com.jdavifranco.desafio.tokenfilmes.ui.ViewModelFactory
 import com.jdavifranco.desafio.tokenfilmes.ui.filmes.FilmesViewModel
 import com.jdavifranco.desafio.tokenfilmes.util.TokenFilmesApplication
@@ -36,9 +37,47 @@ class DetalhesFragment : Fragment() {
         viewModel = ViewModelProvider(
             this, ViewModelFactory(TokenFilmesApplication.repository, args.filmeId)
         ).get(DetalhesViewModel::class.java)
-        viewModel.filme.observe(viewLifecycleOwner, Observer {
-            binding.filme = it
+        binding.filmeViewModel = viewModel
+        binding.lifecycleOwner = this
+
+        //tratamento de ressposta do servidor
+        viewModel.networkResult.observe(viewLifecycleOwner, Observer {
+            when(it) {
+                FilmesApiStatus.ERROR -> {
+                    if (viewModel.filme.value?.detalhes?.overview==null) {
+                        binding.layoutDetalhes.visibility = View.GONE
+                        binding.errorMessageDetail.visibility = View.VISIBLE
+                    } else {
+                        binding.errorMessageDetail.visibility = View.GONE
+                        binding.layoutDetalhes.visibility = View.VISIBLE
+                    }
+
+                }
+                FilmesApiStatus.LOADING -> {
+                    binding.layoutDetalhes.visibility = View.GONE
+                    binding.errorMessageDetail.visibility = View.GONE
+                }
+                else -> {
+                    binding.errorMessageDetail.visibility = View.GONE
+                    binding.layoutDetalhes.visibility = View.GONE
+
+                }
+            }
         })
+        viewModel.filme.observe(viewLifecycleOwner, Observer {
+            if (it.detalhes!==null){
+                binding.layoutDetalhes.visibility = View.VISIBLE
+            }
+            else{
+                binding.layoutDetalhes.visibility = View.GONE
+                binding.errorMessageDetail.visibility = View.VISIBLE
+            }
+            binding.filme = it
+
+        })
+        binding.btnAtualizarDetalhes.setOnClickListener {
+            viewModel.resfreshDetalhesFilme(args.filmeId)
+        }
 
         return binding.root
     }

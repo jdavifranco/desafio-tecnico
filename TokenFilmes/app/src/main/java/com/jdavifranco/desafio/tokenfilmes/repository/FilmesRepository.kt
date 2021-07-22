@@ -54,7 +54,12 @@ class FilmesRepository(private val database:FilmeDao, private val networkSource:
                 _filmes.postValue(database.getAllFilmes())
                 _apiStatus.postValue(FilmesApiStatus.DONE)
             }catch (e:Exception){
-                _apiStatus.postValue(FilmesApiStatus.ERROR)
+                if(_filmes.value!=null){
+                    _apiStatus.postValue(FilmesApiStatus.DONE)
+                }
+                else{
+                    _apiStatus.postValue(FilmesApiStatus.ERROR)
+                }
             }
         }
     }
@@ -74,7 +79,12 @@ class FilmesRepository(private val database:FilmeDao, private val networkSource:
                 _apiStatus.postValue(FilmesApiStatus.DONE)
             }catch (e:Exception){
                 Log.e("Error", "${e.message}")
-                _apiStatus.postValue(FilmesApiStatus.ERROR)
+                if(_filmes.value!=null){
+                    _apiStatus.postValue(FilmesApiStatus.DONE)
+                }
+                else{
+                    _apiStatus.postValue(FilmesApiStatus.ERROR)
+                }
             }
         }
     }

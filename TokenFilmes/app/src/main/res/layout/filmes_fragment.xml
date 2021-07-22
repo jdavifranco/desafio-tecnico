@@ -13,12 +13,50 @@
     android:orientation="vertical"
     tools:context=".ui.filmes.FilmesFragment">
 
-
     <ImageView
-        android:id="@+id/imageViewStatus"
-        apiStatus="@{filmeViewModel.networkResult}"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+            android:id="@+id/imageViewStatus"
+            apiStatus="@{filmeViewModel.networkResult}"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:layout_margin="16dp"
+            android:contentDescription="@string/image_status" />
+
+        <LinearLayout
+            android:id="@+id/errorMessage"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:visibility="gone">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:text="@string/error_title"
+            android:textSize="20sp"
+            android:textStyle="bold">
+
+        </TextView>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:text="@string/error_description"
+            android:textSize="16sp" />
+
+        <Button
+            android:id="@+id/btnAtualizarFilmes"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="16dp"
+            android:gravity="center"
+            android:text="@string/btn_atualizar"
+            app:icon="@drawable/ic_refresh"
+            app:iconGravity="textStart" />
+        </LinearLayout>
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_filmes"
@@ -26,6 +64,6 @@
         tools:itemCount="5"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
-</LinearLayout>
 
+</LinearLayout>
 </layout>

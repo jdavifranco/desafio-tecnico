@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.jdavifranco.desafio.tokenfilmes.R
 import com.jdavifranco.desafio.tokenfilmes.databinding.FilmesFragmentBinding
+import com.jdavifranco.desafio.tokenfilmes.repository.FilmesApiStatus
 import com.jdavifranco.desafio.tokenfilmes.ui.ViewModelFactory
 import com.jdavifranco.desafio.tokenfilmes.util.TokenFilmesApplication
 
@@ -37,24 +38,32 @@ class FilmesFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding =  DataBindingUtil.inflate(inflater, R.layout.filmes_fragment, container, false)
+        //tratando resultados offline
+        viewModel.networkResult.observe(viewLifecycleOwner, Observer {
+            when(it){
+                FilmesApiStatus.ERROR -> binding.errorMessage.visibility = View.VISIBLE
+                else -> binding.errorMessage.visibility = View.GONE
+            }
+        })
+        binding.btnAtualizarFilmes.setOnClickListener {
+            viewModel.refresh()
+        }
 
         adapter = FilmesAdapter()
         binding.filmeViewModel = viewModel
         binding.rvFilmes.adapter = adapter
         binding.rvFilmes.addItemDecoration(DividerItemDecoration(context, LinearLayoutManager.VERTICAL))
         binding.rvFilmes.setHasFixedSize(true)
+        binding.lifecycleOwner = this
         //Utilizando LiveData para observar os estado da lista de fimes no viewModel e atualizar
         //sempre que houver mudanças
-        binding.lifecycleOwner = this
         viewModel.filmes.observe(viewLifecycleOwner, Observer {
-            it?.let {
-                adapter.submitList(it)
-            }
+            adapter.submitList(it)
         })
+
 
 
         return binding.root
     }
-
 
 }

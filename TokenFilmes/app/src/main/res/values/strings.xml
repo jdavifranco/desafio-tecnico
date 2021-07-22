@@ -15,4 +15,5 @@
     <string name="error_title">Ocorreu um erro</string>
     <string name="content_error_description">Mensagem de erro</string>
     <string name="content_btn_atualizar">Botão atualizar tela</string>
+    <string name="image_status">Status da conexão</string>
 </resources>

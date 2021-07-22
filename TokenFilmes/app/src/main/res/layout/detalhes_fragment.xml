@@ -11,106 +11,153 @@
         <variable
             name="filme"
             type="com.jdavifranco.desafio.tokenfilmes.database.Filme" />
+        <variable
+                name="filmeViewModel"
+                type="com.jdavifranco.desafio.tokenfilmes.ui.detalhes.DetalhesViewModel" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/layoutDetalhes"
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.detalhes.DetalhesFragment">
+        android:orientation="vertical">
 
         <ImageView
-            android:id="@+id/imgDetailPoster"
-            imageUrl="@{filme.postUrl}"
-            android:layout_width="0dp"
-            android:layout_height="200dp"
-            android:contentDescription="@string/poster_detail"
-            android:scaleType="fitXY"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:src="@tools:sample/avatars" />
+            android:id="@+id/imageViewStatus"
+            apiStatus="@{filmeViewModel.networkResult}"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:contentDescription="@string/image_status" />
 
-        <TextView
-            android:id="@+id/txtDetailTitulo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:contentDescription="@string/titulo_description"
-            android:text="@{filme.title}"
-            android:textSize="20sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imgDetailPoster"
-            tools:text="The Dark Knight" />
+        <LinearLayout
+            android:id="@+id/errorMessageDetail"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:visibility="gone">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:text="@string/error_title"
+                android:textSize="20sp"
+                android:textStyle="bold">
 
-        <TextView
-            android:id="@+id/txtDetailInfo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="8dp"
-            android:contentDescription="@string/info_detail"
-            android:text="@{filme.year}"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/txtDetailTitulo"
-            tools:text="2001 - 120min" />
+            </TextView>
 
-        <TextView
-            android:id="@+id/txtVote"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
-            android:contentDescription="@string/rate_detail"
-            app:drawableRightCompat="@drawable/ic_star_rate_24"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imgDetailPoster"
-            tools:text="9.8" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:text="@string/error_description"
+                android:textSize="16sp" />
 
-        <TextView
-            android:id="@+id/txtPopularity"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="16dp"
-            android:contentDescription="@string/pop_detail"
-            app:drawableRightCompat="@drawable/ic_baseline_trending_up_24"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/txtVote"
-            tools:text="122" />
+            <Button
+                android:id="@+id/btnAtualizarDetalhes"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="16dp"
+                android:gravity="center"
+                android:text="@string/btn_atualizar"
+                app:icon="@drawable/ic_refresh"
+                app:iconGravity="textStart" />
+        </LinearLayout>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layoutDetalhes"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:context=".ui.detalhes.DetalhesFragment">
 
-        <TextView
-            android:id="@+id/txtSinopse"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
-            android:contentDescription="@string/sinopse_detail"
-            android:text="@{filme.detalhes.overview}"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/guideline2"
-            tools:text="Two imprisoned men bond over a number of years, finding solace and eventual redemption through acts of common decency." />
 
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guideline2"
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.4"
-            app:layout_constraintTop_toTopOf="parent" />
+            <ImageView
+                android:id="@+id/imgDetailPoster"
+                imageUrl="@{filme.postUrl}"
+                android:layout_width="0dp"
+                android:layout_height="300dp"
+                android:contentDescription="@string/poster_detail"
+                android:scaleType="fitXY"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:src="@tools:sample/avatars" />
 
-        <TextView
-            android:id="@+id/txtGenres"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:contentDescription="@string/genre_detail"
-            android:text="@{filme.detalhes.genres}"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/txtSinopse"
-            tools:text="Gêneros: Comédia, Romance, Ação" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <TextView
+                android:id="@+id/txtDetailTitulo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:contentDescription="@string/titulo_description"
+                android:text="@{filme.title}"
+                android:textSize="20sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imgDetailPoster"
+                tools:text="The Dark Knight" />
+
+            <TextView
+                android:id="@+id/txtDetailInfo"
+                detailInfo="@{filme}"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:contentDescription="@string/info_detail"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txtDetailTitulo"
+                tools:text="2001 - 120min" />
+
+            <TextView
+                android:id="@+id/txtVote"
+                voteInfo="@{filme}"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:contentDescription="@string/rate_detail"
+                app:drawableRightCompat="@drawable/ic_star_rate_24"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imgDetailPoster"
+                tools:text="9.8" />
+
+            <TextView
+                android:id="@+id/txtPopularity"
+                popInfo="@{filme}"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="16dp"
+                android:contentDescription="@string/pop_detail"
+                app:drawableRightCompat="@drawable/ic_baseline_trending_up_24"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txtVote"
+                tools:text="122" />
+
+            <TextView
+                android:id="@+id/txtSinopse"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:contentDescription="@string/sinopse_detail"
+                android:text="@{filme.detalhes.overview}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txtDetailInfo"
+                tools:text="Two imprisoned men bond over a number of years, finding solace and eventual redemption through acts of common decency." />
+
+            <TextView
+                android:id="@+id/txtGenres"
+                generoInfo="@{filme}"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:contentDescription="@string/genre_detail"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txtSinopse"
+                tools:text="Gêneros: Comédia, Romance, Ação" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

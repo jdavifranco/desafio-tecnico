@@ -8,8 +8,8 @@
     <fragment
         android:id="@+id/filmesFragment"
         android:name="com.jdavifranco.desafio.tokenfilmes.ui.filmes.FilmesFragment"
-        android:label="filmes_fragment"
-        tools:layout="@layout/filmes_fragment" >
+        android:label="Filmes"
+        tools:layout="@layout/filmes_fragment">
         <action
             android:id="@+id/action_filmesFragment_to_detalhesFragment"
             app:destination="@id/detalhesFragment" />
@@ -17,8 +17,8 @@
     <fragment
         android:id="@+id/detalhesFragment"
         android:name="com.jdavifranco.desafio.tokenfilmes.ui.detalhes.DetalhesFragment"
-        android:label="detalhes_fragment"
-        tools:layout="@layout/detalhes_fragment" >
+        android:label="Detalhes"
+        tools:layout="@layout/detalhes_fragment">
         <action
             android:id="@+id/action_detalhesFragment_to_filmesFragment"
             app:destination="@id/filmesFragment" />
